@@ -1,0 +1,118 @@
+QS.1.
+class Solution:
+    def construct2DArray(self, original: List[int], m: int, n: int) -> List[List[int]]:
+        if len(original)!=m*n:
+            return []
+        matrix=[]
+        for i in range(0,len(original),n):
+            matrix.append(original[i:i+n])
+        return matrix
+QS.2.
+class Solution:
+    def arrangeCoins(self, n: int) -> int:
+        return int(sqrt(2 * n + 0.25) - 0.50)
+		
+QS.3.
+class Solution(object):
+    def sortedSquares(self, nums):
+        result = [0]*len(nums)
+        i = 0
+        j = len(nums)-1
+        k = len(nums)-1
+        while k>=0:
+            if nums[i]*nums[i] <= nums[j]*nums[j]:
+                result[k] = nums[j]*nums[j]
+                k-=1
+                j-=1
+            else:
+                result[k] = nums[i]*nums[i]
+                i+=1
+                k-=1
+        return result        
+
+QS.4.
+class Solution:
+    def findDifference(self, nums1: List[int], nums2: List[int]) -> List[List[int]]:
+        set1=set(nums1)
+        set2=set(nums2)
+        res=[[],[]]
+
+        for i in set1:
+            if i not in set2:
+                res[0].append(i)
+        for i in set2:
+            if i not in set1:
+                res[1].append(i)
+        return res
+
+QS.5.
+class Solution:
+    def findTheDistanceValue(self, arr1: List[int], arr2: List[int], d: int) -> int:
+        x=0
+        for i in arr1:
+            c=1
+            for j in arr2:
+                if abs(i-j)<=d:
+                    c=0
+                    break 
+            if c:
+                x+=1
+        return x
+QS.6.
+class Solution:
+    def findDuplicates(self, nums: List[int]) -> List[int]:
+        res = []
+        hm = {}
+        # adding entries in hashmap to check frequency
+        for i, v in enumerate(nums):
+            if v not in hm:
+                hm[v] = 1
+            else:
+                hm[v] += 1
+        # checking frequency of item and adding output to an array
+        for key, value in hm.items():
+            if value > 1:
+                res.append(key)
+        return res
+QS.7
+def findMin(arr, low, high):
+    
+    if high < low:
+        return arr[0]
+ 
+    
+    if high == low:
+        return arr[low]
+ 
+    
+    mid = int((low + high)/2)
+ 
+    
+    if mid < high and arr[mid+1] < arr[mid]:
+        return arr[mid+1]
+ 
+    
+    if mid > low and arr[mid] < arr[mid - 1]:
+        return arr[mid]
+ 
+    
+    if arr[high] > arr[mid]:
+        return findMin(arr, low, mid-1)
+    return findMin(arr, mid+1, high)
+	
+QS.8
+class Solution:
+    def findOriginalArray(self, changed: List[int]) -> List[int]:
+        c = Counter(changed)
+
+        zeros, m = divmod(c[0], 2)
+        if m: return []
+        ans = [0]*zeros   
+
+        for n in sorted(c.keys()):
+            if c[n] > c[2*n]: return []
+            c[2*n]-= c[n]
+            ans.extend([n]*c[n])
+
+        return ans
+		
