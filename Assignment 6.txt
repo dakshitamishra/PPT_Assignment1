@@ -1,0 +1,131 @@
+Qs.1.
+def diStringMatch(self, s: str) -> List[int]:
+        L,ic,dc=[],0,len(s)
+        for i in s:
+            if i=='I':
+                L.append(ic)
+                ic+=1
+            else:
+                L.append(dc)
+                dc-=1
+        if s[-1]=='I':L.append(ic)
+        else:L.append(dc)
+        return L
+Qs.2.
+def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        for row in matrix:
+           if target in row:
+               return True
+        return False
+Qs.3.
+def validMountainArray(self, arr: List[int]) -> bool:
+        flg=0
+        if(len(arr)==1):
+            return False
+        if(arr[1]<arr[0]):
+            return False
+        for i in range(1,len(arr)):
+            if(flg==0 and arr[i]<arr[i-1]):
+                flg=1
+            if(flg==1 and arr[i]>arr[i-1] or arr[i]==arr[i-1]):
+                return False
+        return(flg==1)
+Qs.4.
+def findMaxLength(self, nums: List[int]) -> int:
+		# Saves the index of the first occurence of a given difference
+        firstIndex = {0: -1}
+        freq = [0, 0]
+        maxlen = 0
+        for i, x in enumerate(nums):
+            freq[x] += 1
+            diff = freq[1]-freq[0]
+			# We look to find a subarray starting at index 0 that would cancel out our current difference
+            if diff in firstIndex:
+                maxlen = max(maxlen, i-firstIndex[diff])
+            if diff not in firstIndex:
+                firstIndex[diff] = i
+        return maxlen
+Qs.5.
+def minValue(A, B, n):
+ 
+    # Sort A and B so that minimum and maximum
+    # value can easily be fetched.
+    A.sort()
+    B.sort()
+ 
+    # Multiplying minimum value of A and maximum
+    # value of B
+    result = 0
+    for i in range(n):
+        result += (A[i] * B[n - i - 1])
+ 
+    return result
+Qs.6.
+def findOriginalArray(self, changed: List[int]) -> List[int]:
+        counter = collections.Counter(changed)
+        res = []
+        for k in counter.keys():
+            
+            if k == 0:
+                # handle zero as special case
+                if counter[k] % 2 > 0:
+                    return []
+                res += [0] * (counter[k] // 2)
+                
+            elif counter[k] > 0:
+                x = k
+                
+                # walk down the chain
+                while x % 2 == 0 and x // 2 in counter:
+                    x = x // 2
+                    
+                # walk up and process all numbers within the chain. mark the counts as 0
+                while x in counter:
+                    if counter[x] > 0:
+                        res += [x] * counter[x]
+                        if counter[x+x] < counter[x]:
+                            return []
+                        counter[x+x] -= counter[x]
+                        counter[x] = 0
+                    x += x
+        return res
+QS.7.
+def generateMatrix(self, n: int) -> List[List[int]]:
+        if not n:
+            return []
+        matrix = [[0 for _ in range(n)] for _ in range(n)]
+        left, right, top, bottom, num = 0, n-1, 0, n-1, 1
+        while left <= right and top <= bottom:
+            for i in range(left, right+1):
+                matrix[top][i] = num 
+                num += 1
+            top += 1
+            for i in range(top, bottom+1):
+                matrix[i][right] = num
+                num += 1
+            right -= 1
+            if top <= bottom:
+                for i in range(right, left-1, -1):
+                    matrix[bottom][i] = num
+                    num += 1
+                bottom -= 1
+            if left <= right:
+                for i in range(bottom, top-1, -1):
+                    matrix[i][left] = num
+                    num += 1
+                left += 1
+        return matrix
+Qs.8.
+def multiply(self, mat1: List[List[int]], mat2: List[List[int]]) -> List[List[int]]:
+        r1, c1, c2 = len(mat1), len(mat1[0]), len(mat2[0])
+        res = [[0] * c2 for _ in range(r1)]
+        mp = defaultdict(list)
+        for i in range(r1):
+            for j in range(c1):
+                if mat1[i][j] != 0:
+                    mp[i].append(j)
+        for i in range(r1):
+            for j in range(c2):
+                for k in mp[i]:
+                    res[i][j] += mat1[i][k] * mat2[k][j]
+        return res
