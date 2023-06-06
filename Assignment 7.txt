@@ -1,0 +1,122 @@
+Qs.1.
+def isIsomorphic(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+    
+        s_to_t = {}
+        t_to_s = {}
+    
+        for i in range(len(s)):
+            if s[i] in s_to_t:
+                if s_to_t[s[i]] != t[i]:
+                    return False
+            else:
+                if t[i] in t_to_s:
+                    return False
+                s_to_t[s[i]] = t[i]
+                t_to_s[t[i]] = s[i]
+    
+        return True
+
+Qs.2.
+def strobogrammatic_num(n):
+       
+    result = numdef(n, n)
+    return result
+       
+def numdef(n, length):
+       
+    if n == 0: return [""]
+    if n == 1: return ["1", "0", "8"]
+       
+    middles = numdef(n - 2, length)
+    result = []
+       
+    for middle in middles:
+        if n != length:           
+            result.append("0" + middle + "0")
+   
+        result.append("8" + middle + "8")
+        result.append("1" + middle + "1")
+        result.append("9" + middle + "6")
+        result.append("6" + middle + "9")
+    return result
+	
+Qs.3.
+def addStrings(self, num1: str, num2: str) -> str:
+        sys.set_int_max_str_digits(10000)
+        return str(int(num1)+int(num2))
+		
+Qs.4.
+def reverseWords(self, s: str) -> str:
+
+
+        return ' '.join([i[::-1] for i in s.split(' ')])
+		
+Qs.5.
+def reverseStr(self, s: str, k: int) -> str:
+        # Convert the input string into a list of characters
+        mylist = list(s)
+        
+        # Iterate through the list with a step size of 2k
+        for i in range(0, len(mylist), k + k):
+            # Reverse the sublist of characters within the range of i to i + k
+            mylist[i:k + i] = reversed(mylist[i:k + i])
+            
+        # Join the reversed list of characters back into a string and return it
+        return "".join(mylist)
+		
+Qs.6.
+def rotateString(self, s: str, goal: str) -> bool:
+        if s == goal:
+            return True
+
+        s, goal = [*s], [*goal] 
+
+        # unpacking the strings (creates list)
+        # ex: 'hello' -> ['h','e','l','l','o']
+
+
+        for x in range(len(s)):
+            a = s[0]
+            s.pop(0); s.append(a)
+            # rotate the string by saving the first character then removing it and then adding it to the end
+
+            if s == goal:
+                return True
+            # checking if the rotated string is the same as the goal
+
+        return False
+Qs.7.
+def backspaceCompare(self, s: str, t: str) -> bool:
+        x=[]
+        y=[]
+        for i in range(len(s)):
+            if x and s[i]=="#":
+                x.pop()
+            else:
+                if s[i]!="#":
+                    x.append(s[i])
+        for i in range(len(t)):
+            if y and t[i]=="#":
+                y.pop()
+            else:
+                if t[i]!="#":
+                    y.append(t[i])
+        if x==y:
+            return True
+        return False
+
+Qs.8.
+def checkStraightLine(self, coor: list[list[int]]) -> bool:
+         
+            (x0,y0),(x1,y1) = coor[0],coor[1]
+
+            for x, y in coor:
+                if (y1-y0)*(x-x0)-(y-y0)*(x1-x0): return False     # <-- cross product in plane
+
+            return True
+		
+		
+		
+		
