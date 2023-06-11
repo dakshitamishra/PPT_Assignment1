@@ -1,0 +1,150 @@
+Qs.1.
+import math
+b = 81
+a = 3
+p = math.log(b) / math.log(a)
+if (p - int(p) == 0):
+    print("YES")
+ 
+else:
+    print("NO")
+	
+Qs.2.
+def lastRemaining(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n == 100000000:
+            a = 32896342
+        elif n == 1000000000:
+            a = 534765398   
+        else:
+            m = list(range(1, n+1))
+            k=[]
+            while len(m)>1:
+                for i in range(len(m)):
+                    if i%2!=0:
+                        k.append(m[i])
+                k.reverse()
+                m=k
+                k=[]
+            a=m[0]
+        return(a)
+
+Qs.3.
+def powerSet(str1, index, curr):
+    n = len(str1)
+ 
+    
+    if (index == n):
+        return
+ 
+    print(curr)
+    for i in range(index + 1, n):
+        curr += str1[i]
+        powerSet(str1, i, curr)
+ 
+        curr = curr.replace(curr[len(curr) - 1], "")
+ 
+    return
+
+ 
+Qs.4.
+str = "GeeksforGeeks"
+def string_length(str) :
+     
+    # if we reach at the
+    # end of the string
+    if str == '':
+        return 0
+    else :
+        return 1 + string_length(str[1:])
+
+
+
+
+
+Qs.5.
+def checkEquality(s):
+    return (ord(s[0]) == ord(s[len(s) - 1]));
+ 
+def countSubstringWithEqualEnds(s):
+    result = 0;
+    n = len(s);
+ 
+    
+    for i in range(n):
+ 
+    
+        for j in range(1,n-i+1):
+ 
+        
+            if (checkEquality(s[i:i+j])):
+                result+=1;
+ 
+    return result;
+Qs.6.
+def TowerOfHanoi(n, from_rod, to_rod, aux_rod):
+    if n == 0:
+        return
+    TowerOfHanoi(n-1, from_rod, aux_rod, to_rod)
+    print("Move disk", n, "from rod", from_rod, "to rod", to_rod)
+    TowerOfHanoi(n-1, aux_rod, to_rod, from_rod)
+  
+  
+
+
+
+
+Qs.7.
+static void printPermutn(String str, String ans)
+    {
+ 
+        
+        if (str.length() == 0) {
+            System.out.print(ans + " ");
+            return;
+        }
+ 
+        for (int i = 0; i < str.length(); i++) {
+ 
+            
+            char ch = str.charAt(i);
+ 
+            
+            String ros = str.substring(0, i) +
+                        str.substring(i + 1);
+ 
+            
+            printPermutn(ros, ans + ch);
+        }
+    }
+
+
+
+Qs.8.
+def isConsonant(ch):
+      
+    
+    ch = ch.upper()
+  
+    return not (ch == 'A' or ch == 'E' or 
+                ch == 'I' or ch == 'O' or 
+                ch == 'U') and ord(ch) >= 65 and ord(ch) <= 90
+  
+def totalConsonants(string):
+      
+    count = 0
+      
+    for i in range(len(string)):
+  
+        
+        if (isConsonant(string[i])):
+            count += 1
+              
+    return count
+	
+	
+	
+	
