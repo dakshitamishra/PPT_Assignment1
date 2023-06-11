@@ -1,0 +1,70 @@
+Qs.1.
+def isPowerOfTwo(self, n):
+        return n and not (n & n - 1)
+		
+Qs.2.
+def findSum(n):
+    sum = 0
+    x = 1
+    while x <= n:
+        sum = sum + x
+        x = x + 1
+    return sum
+	
+Qs.3.
+def factorial(n):
+       
+    if n == 0:
+        return 1
+      
+    return n * factorial(n-1)
+    
+Qs.4.
+def power(N, P):
+    if P == 0:
+        return 1
+    return (N*power(N, P-1))
+
+Qs.5.
+def Nth_of_AP(a, d, N) :
+    return (a + (N - 1) * d)
+
+
+
+Qs.6.
+def toString(List):
+    return ''.join(List)
+def permute(a, l, r):
+    if l == r:
+        print(toString(a))
+    else:
+        for i in range(l, r):
+            a[l], a[i] = a[i], a[l]
+            permute(a, l+1, r)
+            a[l], a[i] = a[i], a[l]  # backtrack
+
+
+
+Qs.7.
+arr=[1,2,3,4,5]
+product=1
+  
+#initialize start and last pointers
+i=0
+j=len(arr)-1
+  
+#add first and last simultaneously 
+while(i<j):
+    product*=arr[i]*arr[j]
+    i+=1
+    j-=1
+      
+#multiply only one element
+if(i==j):
+    product*=arr[i]
+  
+#printing product
+print(product)
+
+
+
