@@ -1,0 +1,163 @@
+Qs.1.
+def minimumDeleteSum(self, s1, s2):
+        n,m,res = len(s1),len(s2),0
+        dp = [0] * (m + 1)
+        for i in s1 + s2: res += ord(i)
+        for i in range(n):
+            prev = 0
+            for j in range(m):
+                if s1[i] == s2[j]:
+                    prev, dp[j+1] = dp[j+1], max(dp[j] , prev + ord(s1[i]))
+                else:
+                    prev, dp[j+1] = dp[j+1], max(dp[j+1] , dp[j])
+        return res - (dp[-1] << 1)
+		
+Qs.2.
+def checkValidString(self, s: str) -> bool:
+        leftmin = leftmax = 0
+        for c in s:
+            if c == "(":
+                leftmax += 1
+                leftmin += 1
+            if c == ")":
+                leftmax -= 1
+                leftmin = max(0, leftmin-1)
+            if c == "*":
+                leftmax +=1
+                leftmin = max(0, leftmin-1)
+            if leftmax < 0:
+                return False
+        if leftmin == 0:
+            return True
+			
+Qs.3.
+def minDistance(self, word1: str, word2: str) -> int:
+        m, n = len(word1), len(word2)
+        dp = [[0] * (n + 1) for _ in range(m + 1)]
+        
+        # fill in the dynamic programming table
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                if word1[i - 1] == word2[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                else:
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+        
+        # return the minimum number of deletions required
+        return m + n - 2 * dp[m][n]
+		
+
+Qs.4.
+def solve(curNode):
+        if not curNode:
+            return ''
+        
+        subString = str(curNode.val)
+		#If curNode has no children
+        if not curNode.left and not curNode.right:
+            return subString
+		
+        subString += '(' + solve(curNode.left) + ')'
+        if curNode.right:
+            subString += '(' + solve(curNode.right) + ')'
+        
+        return subString
+   
+    return solve(root)
+	
+	
+Qs.5.
+def compress(self, chars: List[str]) -> int:
+        i=0
+        count=1
+        while i<len(chars)-1:
+            if chars[i+1]==chars[i]:
+                chars.pop(i+1)
+                count+=1
+            elif count>1:
+                cc=[*str(count)]
+                for j in range(len(cc)):
+                    chars.insert(i+j+1,cc[j])
+                count=1
+                i+=len(cc)+1
+            else:
+                i+=1
+        if count>1:
+            chars+=[*str(count)]
+        return len(chars)
+		
+		
+		
+Qs.6.
+def findAnagrams(self, s: str, p: str) -> List[int]:
+        hm, res, pL, sL = defaultdict(int), [], len(p), len(s)
+        if pL > sL: return []
+
+        # build hashmap
+        for ch in p: hm[ch] += 1
+
+        # initial full pass over the window
+        for i in range(pL-1):
+            if s[i] in hm: hm[s[i]] -= 1
+            
+        # slide the window with stride 1
+        for i in range(-1, sL-pL+1):
+            if i > -1 and s[i] in hm:
+                hm[s[i]] += 1
+            if i+pL < sL and s[i+pL] in hm: 
+                hm[s[i+pL]] -= 1
+                
+            # check whether we encountered an anagram
+            if all(v == 0 for v in hm.values()): 
+                res.append(i+1)
+                
+        return res
+
+
+
+
+
+
+
+Qs.7.
+def decodeString(self, s: str) -> str:
+        st = []
+        num = 0
+        res = ''
+
+        for ch in s:
+            if ch.isnumeric():
+                num = num * 10 + int(ch)
+            elif ch == '[':
+                st.append(res)
+                st.append(num)
+                res = ''
+                num = 0
+            elif ch == ']':
+                cnt = st.pop()
+                prev = st.pop()
+                res = prev + cnt * res
+            else:
+                res += ch
+        return res
+
+Qs.8.
+bool buddyStrings(string s, string goal) {
+        if (s.size() != goal.size()) return false;
+
+        vector<int> count1(26, 0), count2(26, 0);
+        int temp = 0;
+
+        for (int i = 0; i < s.size(); i++) {
+            if (s[i] != goal[i]) temp++;
+
+            count1[s[i] - 'a']++;
+            count2[goal[i] - 'a']++;
+        }
+        int allUniqueChars = true;
+        for (int i = 0; i < count1.size(); i++) {
+            if (count1[i] != count2[i]) return false;
+            if (count1[i] > 1) allUniqueChars = false;
+        }
+        return ((temp == 2) || (temp == 0 && !allUniqueChars));
+    }
