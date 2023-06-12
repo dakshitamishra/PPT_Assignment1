@@ -54,9 +54,97 @@ def findPeakElement(self, nums):
     #handle condition 1 and 2
     return left if nums[left] >= nums[right] else right
 Qs.3.
-
+def missingNumber(self, nums: List[int]) -> int:
+        n = len(nums) + 1
+        total = (n * (n-1)) // 2
+        
+        for num in nums:
+            total -= num
+        
+        return total
+        
+        
 Qs.4
+def findDuplicate(self, nums: List[int]) -> int:
+    # Using Floyd's Tortoise and Hare algorithm
+    # to detect the cycle in the linked list
+    tortoise = nums[0]
+    hare = nums[0]
+    
+    # Move tortoise and hare until they meet
+    while True:
+        tortoise = nums[tortoise]
+        hare = nums[nums[hare]]
+        if tortoise == hare:
+            break
+    
+    # Reset tortoise to the start of the list
+    tortoise = nums[0]
+    
+    # Move tortoise and hare at the same speed until they meet again
+    while tortoise != hare:
+        tortoise = nums[tortoise]
+        hare = nums[hare]
+    
+    # Return the duplicate number
+    return tortoise
+
 Qs.5.
+def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # Convert nums1 to set
+        nums1_set = set(nums1)
+        # Create a set to store the intersection
+        intersection_set = set()
+        # Loop through nums2 and check if each element is in nums1_set
+        for num in nums2:
+            if num in nums1_set:
+                intersection_set.add(num)
+        # Convert the intersection set back to a list and return
+        return list(intersection_set)
+
 Qs.6.
+def findMin(self, nums: List[int]) -> int:
+        low,high=0,len(nums)-1
+        n=len(nums)
+        while low<=high:
+            mid=low+(high-low)//2
+            if nums[mid]<=nums[(mid-1+n)%n] and nums[mid]<=nums[(mid+1)%n]:
+                return nums[mid]
+            if nums[mid]>=nums[low]:
+                if nums[high]>=nums[mid]:
+                    high=mid-1
+                else:
+                    low=mid+1
+            else:
+                high=mid-1
+
+        return -1
+
 Qs.7.
+def findFirstAndLast(arr, n, x):
+    first = -1
+    last = -1
+    for i in range(0, n):
+        if (x != arr[i]):
+            continue
+        if (first == -1):
+            first = i
+        last = i
+ 
+    if (first != -1):
+        print("First Occurrence = ", first,
+              " \nLast Occurrence = ", last)
+    else:
+        print("Not Found")
+ 
 Qs.8.
+def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        if len(nums1) > len(nums2): return self.intersect(nums2, nums1)
+            
+        cnt = Counter(nums1)
+        ans = []
+        for x in nums2:
+            if cnt[x] > 0:
+                ans.append(x)
+                cnt[x] -= 1
+        return ans
