@@ -1,0 +1,161 @@
+Qs.1
+class Solution:
+    def threeSumClosest(self, nums: List[int], target: int) -> int:
+        nums.sort()
+        
+        result = sum(nums[:3])
+        for i in range(len(nums)-2):
+            if i==0 and nums[i] == nums[i-1]:
+                continue
+            
+            l, r = i+1, len(nums)-1
+            while l < r:
+                curr = nums[i] + nums[l] + nums[r]
+                diff = curr - target
+                if diff < 0:
+                    l += 1
+                elif diff > 0:
+                    r -= 1
+                else:
+                    return curr
+                """
+                TLE for block if statement
+                
+                if abs(result-target) > abs(diff):
+                    result = curr
+                """
+                result = curr if abs(result-target) > abs(diff) else result
+
+        
+        return result
+		
+Qs.2.
+class Solution(object):
+    def fourSum(self, nums, target):
+        quadruplets = []
+        n = len(nums)
+        # Sorting the array
+        nums.sort()
+        for i in range(n - 3):
+            # Skip duplicates
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+            for j in range(i + 1, n - 2):
+                # Skip duplicates
+                if j > i + 1 and nums[j] == nums[j - 1]:
+                    continue
+                left = j + 1
+                right = n - 1
+                while left < right:
+                    sum = nums[i] + nums[j] + nums[left] + nums[right]
+                    if sum < target:
+                        left += 1
+                    elif sum > target:
+                        right -= 1
+                    else:
+                        quadruplets.append([nums[i], nums[j], nums[left], nums[right]])
+                        # Skip duplicates
+                        while left < right and nums[left] == nums[left + 1]:
+                            left += 1
+                        while left < right and nums[right] == nums[right - 1]:
+                            right -= 1
+                        left += 1
+                        right -= 1
+        return quadruplets
+		
+		
+Qs.3.
+def nextPermutation(self, nums):
+        for i in range(len(nums)-1, 0, -1):
+            # find the index of the last peak
+            if nums[i - 1] < nums[i]:
+                nums[i:] = sorted(nums[i:])
+                
+                # get the index before the last peak
+                j = i - 1
+                
+                # swap the pre-last peak index with the value just large than it
+                for k in range(i, len(nums)):
+                    if nums[j] < nums[k]:
+                        nums[k], nums[j] = nums[j], nums[k]
+                        return nums
+        return nums.reverse()
+
+Qs.4.
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        for i in range(len(nums)):
+            if(nums[i]>=target):
+                return i
+        return len(nums)
+
+Qs.5.
+class Solution:
+    def plusOne(self, digits):
+        strings = ""
+        for number in digits:
+            strings += str(number)
+
+        temp = str(int(strings) +1)
+
+        return [int(temp[i]) for i in range(len(temp))]
+
+Qs.6.
+def findSingle(A, ar_size):
+    
+    
+    for i in range(ar_size):
+        
+        
+        count = 0
+        for j in range(ar_size):
+            
+            
+            
+            if(A[i] == A[j]):
+                count += 1
+  
+        
+        if(count == 1):
+            return A[i]
+            
+    
+    return -1
+  
+ar = [2, 3, 5, 4, 5, 3, 4]
+n = len(ar)
+print("Element occurring once is", findSingle(ar, n))
+
+Qs.7.
+class Solution:
+    def summaryRanges(self, nums):
+        if not nums:
+            return []
+
+        ranges = []
+        start = nums[0]
+
+        for i in range(1, len(nums)):
+            if nums[i] != nums[i-1] + 1:
+                if start == nums[i-1]:
+                    ranges.append(str(start))
+                else:
+                    ranges.append(str(start) + "->" + str(nums[i-1]))
+                start = nums[i]
+
+        # Handle the last range
+        if start == nums[-1]:
+            ranges.append(str(start))
+        else:
+            ranges.append(str(start) + "->" + str(nums[-1]))
+
+        return ranges
+		
+Qs.8.
+def canAttendMeetings(intervals):
+        
+    intervals.sort(key=lambda a: a.start)
+    for i in range(len(intervals)-1):
+        if intervals[i].end > intervals[i+1].start:
+            return False
+    return True
