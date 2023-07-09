@@ -1,0 +1,139 @@
+Qs.1.
+const arr = ['54gdgdfe3', '434ffd', '43frdf', '43fdhnh', 'wgcxhjny', 'fsdf34'];
+const isUnique = str => {
+   return str.split('').every(el => str.indexOf(el) === str.lastIndexOf(el));
+};
+const findUniqueString = arr => {
+   for(let i = 0; i < arr.length; i++){
+      if(isUnique(arr[i])){
+         return arr[i];
+      };
+   };
+   return false;
+};
+console.log(findUniqueString(arr));
+
+Qs.2.
+class Solution:
+    def maxSubarraySumCircular(self, nums: List[int]) -> int:
+        return max(nums) if max(nums)<0 else max(reduce(lambda x,y:(max(x[0]+y,0),max(x[1],x[0]+y)),nums,(0,nums[0]))[1],sum(nums)-reduce(lambda x,y:(min(x[0]+y,0),min(x[1],x[0]+y)),nums,(0, nums[0]))[1])
+		
+
+Qs.3.
+class Solution:
+    def countStudents(self, students: List[int], sandwiches: List[int]) -> int:
+        student_count = Counter(students)
+        for sandwich in sandwiches:
+            if student_count[sandwich] > 0:
+                student_count[sandwich] -= 1
+            else:
+                return student_count[not sandwich]
+        return 0
+
+Qs.4.
+class RecentCounter:
+
+    def __init__(self):
+        self.q = deque()
+        
+    def ping(self, t: int) -> int:
+        self.q.append(t)
+        
+        while t - self.q[0] > 3000:
+            self.q.popleft()
+            
+        return len(self.q)
+
+Qs.5.
+class Solution:
+    def findTheWinner(self, n: int, k: int) -> int:
+        return self.helper(n,k)+1
+
+    def helper(self, n:int, k:int)-> int:
+        if(n==1):
+            return 0
+        prevWinner = self.helper(n-1, k)
+        return (prevWinner + k) % n
+
+Qs.6.
+class Solution:
+    def deckRevealedIncreasing(self, deck: List[int]) -> List[int]:
+        
+        n=len(deck)
+        arr=list(range(n))
+
+        ans=[0]*n
+        deck.sort()
+
+        while arr:
+            ans[arr.pop(0)]=deck.pop(0)
+            if arr:arr.append(arr.pop(0))
+        
+
+        return ans
+
+Qs.7.
+class FrontMiddleBackQueue:
+
+    def __init__(self):
+        self.queue=[]
+        
+
+    def pushFront(self, val: int) -> None:
+        self.queue.insert(0,val)
+        
+
+    def pushMiddle(self, val: int) -> None:
+        n=len(self.queue)
+        self.queue.insert(n//2,val)
+    def pushBack(self, val: int) -> None:
+        self.queue.append(val)
+
+    def popFront(self) -> int:
+        if len(self.queue)==0:
+            return -1    
+        return self.queue.pop(0)
+        
+
+    def popMiddle(self) -> int:
+        if len(self.queue)==0:
+            return -1
+        n=len(self.queue)
+        if n%2==0:
+            n=(n//2)-1
+        else:
+            n=int(n//2)
+        return self.queue.pop(n)
+        
+
+    def popBack(self) -> int:
+        if len(self.queue)==0:
+            return -1 
+        return self.queue.pop()
+        
+
+
+# Your FrontMiddleBackQueue object will be instantiated and called as such:
+# obj = FrontMiddleBackQueue()
+# obj.pushFront(val)
+# obj.pushMiddle(val)
+# obj.pushBack(val)
+# param_4 = obj.popFront()
+# param_5 = obj.popMiddle()
+# param_6 = obj.popBack()
+
+Qs.8.
+class DataStream:
+
+    def __init__(self, value: int, k: int):
+        self.count = 0 
+        self.value = value
+        self.k = k
+
+    def consec(self, num: int) -> bool:
+        if num == self.value:
+            self.count += 1
+        else: 
+            self.count = 0 
+            
+        return self.count >= self.k
