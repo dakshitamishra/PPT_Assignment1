@@ -1,0 +1,120 @@
+Qs.1.
+class Solution(object):
+    def merge(self, intervals):
+        """
+        :type intervals: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        intervals=sorted(intervals, key=lambda x:x[0])
+        l=len(intervals)-1
+        i=0
+        while(i<l):
+            if(intervals[i][1]>=intervals[i+1][0] and intervals[i][1]<=intervals[i+1][1]):
+                arr=[intervals[i][0],intervals[i+1][1]]
+                intervals.remove(intervals[i])
+                intervals.remove(intervals[i])
+                intervals.insert(i,arr)
+                l-=1
+                i-=1
+            elif(intervals[i][1]>=intervals[i+1][0] and intervals[i][1]>=intervals[i+1][1]):
+                intervals.remove(intervals[i+1])
+                l-=1
+                i-=1      
+            i+=1
+        return intervals
+		
+Qs.2.
+class Solution(object):
+    def sortColors(self, nums):
+        for i in range(len(nums) - 1, 0, -1):
+            for j in range(i):
+                if nums[j] > nums[j + 1]:
+                    temp = nums[j + 1]
+                    nums[j + 1] = nums[j]
+                    nums[j] = temp
+
+Qs.3.
+def firstBadVersion(self, n: int) -> int:
+        low = 1
+        high = n
+        version = 0
+        
+        while low <= high:
+            mid = (low+high)//2
+            badver = isBadVersion(mid)
+            if badver == True:
+                version = mid
+                high = mid - 1
+            elif badver == False:
+                low = mid + 1
+        return version
+
+Qs.4.
+class Solution:
+    def maximumGap(self, nums: List[int]) -> int:
+        nums=sorted(nums)
+        min=float("-inf")
+        if len(nums)<2:
+            return 0
+        for i in range(len(nums)-1):
+            x=abs(nums[i]-nums[i+1])
+            if min<x:
+                min=x
+        return min
+
+
+Qs.5.
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        nums.sort()
+        n = len(nums)
+        for i in range(1, n):
+            if nums[i] == nums[i - 1]:
+                return True
+        return False
+
+Qs.6.
+class Solution:
+    def findMinArrowShots(self, points: List[List[int]]) -> int:
+        # sort by end point   
+        points.sort(key = lambda x: x[1])
+        end = points[0][1]
+        count = 1
+        # iterate and count arrows
+        for s,e in points[1:]:
+            if s > end:
+                count += 1
+                end = e
+        
+        return count
+
+Qs.7.
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        sub = [nums[0]]
+        for i in range(1,len(nums)):
+            if nums[i] > sub[-1]:
+                sub.append(nums[i])
+            if nums[i] < sub[-1]:
+                for j in sub:
+                    if j >= nums[i]:
+                        sub[sub.index(j)] = nums[i]
+                        break
+        return len(sub)
+
+Qs.8.
+class Solution:
+    def find132pattern(self, nums: List[int]) -> bool:
+        stack, minVal = [], float('inf')
+
+        for n in nums:
+            while stack and stack[-1][0] <= n:
+                stack.pop()
+
+            if stack and stack[-1][1] < n:
+                return True
+            
+            minVal = min(minVal, n)
+            stack.append([n, minVal])
+        
+        return False
