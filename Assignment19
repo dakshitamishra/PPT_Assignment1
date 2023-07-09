@@ -1,0 +1,172 @@
+Qs.1.
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        test = ListNode(0)
+        tail = test
+
+        while list1 and list2:
+            if list1.val <= list2.val:
+                tail.next = list1
+                list1 = list1.next
+            else:
+                tail.next = list2
+                list2 = list2.next
+            tail = tail.next
+
+        if list1:
+            tail.next = list1
+        elif list2:
+            tail.next = list2
+
+        return test.next
+
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        if not lists:
+            return None
+
+        temp = [lists[0]]
+        for i in range(len(lists) - 1):
+            x = self.mergeTwoLists(temp[i], lists[i + 1])
+            temp.append(x)
+        return temp[-1]
+
+
+Qs.2.
+class FenwickTree:
+  def __init__(self, n: int):
+    self.sums = [0] * (n + 1)
+
+  def update(self, i: int, delta: int) -> None:
+    # update the i-th element in the Fenwick tree with delta
+    while i < len(self.sums):
+      self.sums[i] += delta
+      i += FenwickTree.lowbit(i)
+
+  def get(self, i: int) -> int:
+    # get the sum of the first i elements in the Fenwick tree
+    summ = 0
+    while i > 0:
+      summ += self.sums[i]
+      i -= FenwickTree.lowbit(i)
+    return summ
+
+  @staticmethod
+  def lowbit(i: int) -> int:
+    # get the lowest set bit in the binary representation of i
+    return i & -i
+
+
+class Solution:
+  def countSmaller(self, nums: List[int]) -> List[int]:
+    ans = []
+    ranks = collections.Counter()
+    # get the rank of each unique element in nums
+    self._getRanks(nums, ranks)
+    tree = FenwickTree(len(ranks))
+
+    # iterate through nums backwards
+    for num in reversed(nums):
+      # get the number of elements smaller than num that have been seen so far
+      ans.append(tree.get(ranks[num] - 1))
+      # update the rank of num in the Fenwick tree
+      tree.update(ranks[num], 1)
+
+    # reverse the answer since we iterated backwards through nums
+    return ans[::-1]
+
+  def _getRanks(self, nums: List[int], ranks: Dict[int, int]) -> None:
+    rank = 0
+    # iterate through the sorted set of unique elements in nums
+    for num in sorted(set(nums)):
+      # assign a rank to each unique element
+      rank += 1
+      ranks[num] = rank
+
+Qs.3.
+class Solution:
+    def sortArray(self, nums: list[int]) -> list[int]: 
+
+        ans, nSet, mx, mn = [],set(nums),nums[0],nums[0]
+        d = {n:0 for n in nSet}
+
+        for n in nums: d[n]+= 1
+
+        for n in d:
+            if n > mx: mx = n
+            if n < mn: mn = n
+
+        for i in range(mn, mx+1):
+            if i not in d: continue
+            ans+= [i]*d[i]
+
+        return ans
+
+Qs.4.
+class Solution:
+    def moveZeroes(self, nums: list) -> None:
+        slow = 0
+        for fast in range(len(nums)):
+            if nums[fast] != 0 and nums[slow] == 0:
+                nums[slow], nums[fast] = nums[fast], nums[slow]
+
+            # wait while we find a non-zero element to
+            # swap with you
+            if nums[slow] != 0:
+                slow += 1
+
+Qs.5.
+class Solution:
+    def rearrangeArray(self, nums: List[int]) -> List[int]:
+        result = [0]*len(nums)
+        result[::2] = [n for n in nums if n > 0]
+        result[1::2] = [n for n in nums if n < 0]
+        return result
+
+Qs.6.
+class Solution:
+    def merge(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        for i in range(m,m+n):
+            nums1[i]=nums2[i-m]
+        nums1.sort()
+
+Qs.7.
+class Solution:
+    def intersection(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # Convert nums1 to set
+        nums1_set = set(nums1)
+        # Create a set to store the intersection
+        intersection_set = set()
+        # Loop through nums2 and check if each element is in nums1_set
+        for num in nums2:
+            if num in nums1_set:
+                intersection_set.add(num)
+        # Convert the intersection set back to a list and return
+        return list(intersection_set)
+
+
+Qs.8.
+class Solution(object):
+    def intersect(self, nums1, nums2):
+        # Sort both the arrays first...
+        sortedArr1 = sorted(nums1)
+        sortedArr2 = sorted(nums2)
+        
+        i = 0
+        j = 0
+        output = []
+        while i < len(sortedArr1) and j < len(sortedArr2):
+            
+            
+            if sortedArr1[i] < sortedArr2[j]:
+                i += 1
+            
+            
+            elif sortedArr2[j] < sortedArr1[i]:
+                j += 1
+            
+            
+            else:
+                output.append(sortedArr1[i])
+                i += 1
+                j += 1
+        return output  
